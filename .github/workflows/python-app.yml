@@ -26,6 +26,8 @@ jobs:
     - name: Run Bot
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        EXCHANGE_API_KEY: ${{ secrets.EXCHANGE_API_KEY }}
+        EXCHANGE_API_SECRET: ${{ secrets.EXCHANGE_API_SECRET }}
       run: |
         python main.py
         
