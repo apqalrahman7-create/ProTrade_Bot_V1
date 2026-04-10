@@ -1,0 +1,4 @@
+ccxt
+flask
+flask-cors
+cryptography
