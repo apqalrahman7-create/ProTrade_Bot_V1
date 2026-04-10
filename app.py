@@ -78,5 +78,20 @@ def generate_code():
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)@app.route('/admin/approve_user/<user_id>', methods=['POST'])
+def approve_user(user_id):
+    # البحث عن المستخدم في قاعدة البيانات
+    user = TradingSession.query.filter_by(user_id=user_id).first()
+    if user:
+        # تفعيل الحساب فوراً وتمديد الصلاحية شهرين
+        user.is_fully_activated = True
+        user.expiry_date = datetime.utcnow() + timedelta(days=60)
+        db.session.commit()
+        
+        return jsonify({
+            "status": "success", 
+            "message": f"✅ تم تفعيل حساب {user_id} تلقائياً"
+        })
+    return jsonify({"status": "error", "message": "المستخدم غير موجود"}), 404
+    
   
